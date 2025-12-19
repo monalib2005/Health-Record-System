@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Background + Text */
+    --background: 200 25% 96%;            /* very soft blue-gray */
+    --foreground: 215 32% 15%;            /* deep navy */
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 32% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 32% 15%;
+
+    /* PRIMARY (DARKER & PROFESSIONAL) */
+    --primary: 186 65% 42%;               /* deep medical teal */
+    --primary-dark: 187 55% 32%;          /* darker deep teal */
+    --primary-light: 184 40% 42%;         /* soft teal, NOT bright */
+    --primary-foreground: 0 0% 100%;
+
+    /* SECONDARY */
+    --secondary: 205 40% 35%;             /* dark blue-teal */
+    --secondary-foreground: 200 25% 96%;
+
+    /* MUTED */
+    --muted: 200 18% 88%;
+    --muted-foreground: 200 18% 42%;
+
+    /* ACCENT — toned-down neon */
+    --accent: 184 55% 55%;                /* soft cyan, not bright */
+    --accent-foreground: 215 32% 15%;
+
+    /* STATUS COLORS */
+    --destructive: 0 72% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 158 55% 42%;
+    --success-foreground: 0 0% 100%;
+
+    /* BORDER / INPUT */
+    --border: 200 20% 80%;
+    --input: 200 20% 88%;
+    --ring: 186 65% 42%;                  /* primary dark teal */
+
+    /* RADIUS */
+    --radius: 0.75rem;
+
+    /* CHART COLORS */
+    --chart-1: 186 65% 42%;
+    --chart-2: 205 40% 35%;
+    --chart-3: 184 50% 52%;
+    --chart-4: 200 60% 45%;
+    --chart-5: 160 50% 45%;
+
+    /* DARKER, PREMIUM GRADIENTS */
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(187, 35%, 49%),  /* dark teal */
+      hsl(186 65% 42%)   /* deep teal */
+    );
+
+    --gradient-secondary: linear-gradient(
+      135deg,
+      hsl(205 40% 28%),  /* deep blue teal */
+      hsl(186, 41%, 59%)   /* medium teal */
+    );
+
+    --gradient-hero: linear-gradient(
+      135deg,
+      hsl(188 55% 32%),  /* dark hero base */
+      hsl(184 55% 55%)   /* soft cyan, toned down */
+    );
+
+    /* SHADOWS */
+    --shadow-soft: 0 2px 8px -2px hsl(215 32% 15% / 0.08);
+    --shadow-card: 0 4px 12px -2px hsl(215 32% 15% / 0.10);
+    --shadow-elevated: 0 8px 24px -4px hsl(215 32% 15% / 0.12);
+
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
