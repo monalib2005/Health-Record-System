@@ -19,7 +19,10 @@ const userSchema = new mongoose.Schema({
       return this.authProvider === "local";
     }
   },
-
+  publicKey: {
+      type: Object, // JWK format
+      default: null
+    },
    googleId: String
 
 }, { timestamps: true });

@@ -27,11 +27,81 @@ export const register = async (req, res) => {
 
     res.status(201).json({
       token,
-      role: user.role
+      role: user.role,
+      userId: user._id
     });
 
   } catch (error) {
     res.status(500).json({ message: "Registration failed" });
+  }
+};
+
+export const storePatientPublicKey = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { publicKey } = req.body;
+
+    // 1️⃣ Role check
+    if (req.user.role !== "patient") {
+      return res.status(403).json({
+        message: "Only patients can store public keys"
+      });
+    }
+
+    // 2️⃣ Public key presence
+    if (!publicKey) {
+      return res.status(400).json({
+        message: "Public key is required"
+      });
+    }
+
+    // 3️⃣ Validate minimal JWK structure
+    const { kty, n, e } = publicKey;
+
+    if (!kty || !n || !e) {
+      return res.status(400).json({
+        message: "Invalid public key format"
+      });
+    }
+
+    // 4️⃣ Enforce RSA only (important for future safety)
+    if (kty !== "RSA") {
+      return res.status(400).json({
+        message: "Only RSA public keys are supported"
+      });
+    }
+
+    // 5️⃣ Fetch user
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // 6️⃣ Prevent overwriting existing key
+    if (user.publicKey) {
+      return res.status(409).json({
+        message: "Public key already exists"
+      });
+    }
+
+    // 7️⃣ SANITIZE → store only required fields
+    user.publicKey = {
+      kty,
+      n,
+      e
+    };
+
+    await user.save();
+
+    return res.status(200).json({
+      message: "Public key stored successfully"
+    });
+
+  } catch (error) {
+    console.error("Public key store error:", error);
+    return res.status(500).json({
+      message: "Failed to store public key"
+    });
   }
 };
 
